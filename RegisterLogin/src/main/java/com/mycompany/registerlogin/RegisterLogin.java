@@ -39,7 +39,7 @@ public class RegisterLogin {
         
         String username = "";
         while (true) {
-            username = JOptionPane.showInputDialog(null, "Enter username (must be at least 5 characters long and contain an underscore):", "Registration", JOptionPane.PLAIN_MESSAGE);
+            username = JOptionPane.showInputDialog(null, "Enter username (must be at least 5 characters long and contain an underscore):", "Registration", JOptionPane.PLAIN_MESSAGE); //(Fromen,2016)
             if (username == null) {
                 return;
             }
@@ -60,7 +60,7 @@ public class RegisterLogin {
                 if (password == null) {
                     return;
                 }
-                if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*\\d.*") && password.matches(".*[!@#$%^&*()].*")) {
+                if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*\\d.*") && password.matches(".*[!@#$%^&*()].*")) { //(Sharma,2014)
                     
                     JOptionPane.showMessageDialog(null, "Password successfully captured!", "Registration", JOptionPane.INFORMATION_MESSAGE);
                     break;
@@ -71,7 +71,7 @@ public class RegisterLogin {
             }
 
         String firstName = "";
-                while (true) {
+                while (true) {//(progyammer,2016)
                     firstName = JOptionPane.showInputDialog(null, "Enter first name (letters only):", "Registration", JOptionPane.PLAIN_MESSAGE);
                     if (firstName == null) {
                         return;
@@ -85,18 +85,18 @@ public class RegisterLogin {
 
                     
         String lastName = "";
-                while (true) {
+                while (true) {//(progyammer,2016)
                     lastName = JOptionPane.showInputDialog(null, "Enter last name (letters only):", "Registration", JOptionPane.PLAIN_MESSAGE);
                     if (lastName == null) {
                         return;
                     }
-                    if (lastName.matches("[a-zA-Z]+")) {
+                    if (lastName.matches("[a-zA-Z]+")) { //(Sharma,2014)
                         break;
                     } else {
                         JOptionPane.showMessageDialog(null, "Last name must contain only letters. Please try again.", "Registration", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-                        if (username == null || password == null || firstName == null || lastName == null) {
+                        if (username == null || password == null || firstName == null || lastName == null) { //when user cancels registration
                             return;
                         }
 
@@ -130,6 +130,10 @@ public class RegisterLogin {
         JOptionPane.showMessageDialog(null, "Welcome " + user.getFirstName() + ", " + user.getLastName() + " it is great to see you again.", "Login", JOptionPane.INFORMATION_MESSAGE);
 
     }
+
+    boolean isUsernameFormattedCorrectly(String user_) {// this was automatically generated when i created my unit test 
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
 
 class User {
@@ -153,7 +157,7 @@ class User {
         }
     }
 
-    public static User getUser(String username) {
+    public static User getUser(String username) {//(Thakur,2020)
         for (User user : users) {
             if (user != null && user.getUsername().equals(username)) {
                 return user;
@@ -178,3 +182,28 @@ class User {
         return lastName;
     }
 }
+
+//Referencing List:
+/*
+Thakur.2020. Get the Name of a Member Object in Java. [Online].
+Available at: https://www.tutorialspoint.com/get-the-name-of-a-member-object-in-java#:~:text=The%20getName()%20method%20is,the%20form%20of%20a%20string.
+[accessed 13 April 2024].
+*/
+
+/*
+Fromen.2016. Efficiently Check Multiple Conditions [closed], Java. [Online].
+Available at: https://stackoverflow.com/questions/40860009/efficiently-check-multiple-conditions
+[accessed 13 April 2024].
+*/
+
+/*
+Progyammer.2016. How can I input an if statement inside a while loop?, Java. [Online].
+Available at: https://stackoverflow.com/questions/38670004/how-can-i-input-an-if-statement-inside-a-while-loop
+[accessed 11 April 2024]
+*/
+
+/*
+Sharma. 2014. Check if a String contains a special character, Java. [Online].
+Available at: https://stackoverflow.com/questions/1795402/check-if-a-string-contains-a-special-character#:~:text=You%20can%20use%20the%20following%20code%20to%20detect%20special%20character%20from%20string.&text=If%20it%20matches%20regex%20%5Ba,not%20special%20characters%20in%20it.
+[accessed 13 April 2024]
+*/
