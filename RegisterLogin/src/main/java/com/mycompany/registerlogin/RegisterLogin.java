@@ -8,9 +8,16 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
 public class RegisterLogin {
-    private static ArrayList<Task> taskList = new ArrayList<>();
+    private static ArrayList<Task> taskList = new ArrayList<>(); //(How to use array list ? [Oop], n.d.)
     private static ArrayList<User> users = new ArrayList<>();
     private static int taskCounter = 0;
+
+     // Arrays to store task details
+    private static ArrayList<String> developerArray = new ArrayList<>(); 
+    private static ArrayList<String> taskNameArray = new ArrayList<>(); 
+    private static ArrayList<String> taskIdArray = new ArrayList<>(); 
+    private static ArrayList<Integer> taskDurationArray = new ArrayList<>(); 
+    private static ArrayList<String> taskStatusArray = new ArrayList<>(); 
 
     public static void main(String[] args) {
         while (true) {
@@ -61,13 +68,13 @@ public class RegisterLogin {
             if (password == null) {
                 return;
             }
-            if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*\\d.*") && password.matches(".*[!@#$%^&*()].*")) {
+            if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*\\d.*") && password.matches(".*[!@#$%^&*()].*")) { 
                 JOptionPane.showMessageDialog(null, "Password successfully captured!", "Registration", JOptionPane.INFORMATION_MESSAGE);
                 break;
             } else {
                 JOptionPane.showMessageDialog(null, "Password is not correctly formatted, please ensure that the password contains at least 8 characters, a capital letter, a number, and a special character.", "Registration", JOptionPane.ERROR_MESSAGE);
             }
-        }
+        }//(Methods as sources, n.d.)&(Regexp Java for password validation, n.d.)
 
         String firstName = "";
         while (true) {
@@ -80,7 +87,7 @@ public class RegisterLogin {
             } else {
                 JOptionPane.showMessageDialog(null, "First name must contain only letters. Please try again.", "Registration", JOptionPane.ERROR_MESSAGE);
             }
-        }
+        }//(Methods as sources, n.d.)
 
         String lastName = "";
         while (true) {
@@ -93,7 +100,7 @@ public class RegisterLogin {
             } else {
                 JOptionPane.showMessageDialog(null, "Last name must contain only letters. Please try again.", "Registration", JOptionPane.ERROR_MESSAGE);
             }
-        }
+        }//(Methods as sources, n.d.)
 
         User user = new User(username, password, firstName, lastName);
         users.add(user);
@@ -119,7 +126,7 @@ public class RegisterLogin {
 
         JOptionPane.showMessageDialog(null, "Welcome " + user.getFirstName() + ", " + user.getLastName() + " it is great to see you again.", "Login", JOptionPane.INFORMATION_MESSAGE);
         
-        // Show task menu
+        // To show task menu
         showTaskMenu(user);
     }
 
@@ -136,141 +143,152 @@ public class RegisterLogin {
         while (true) {
             int choice = JOptionPane.showOptionDialog(
                     null,
-                    "Add Task\nView Tasks\nLogout",
+                    "Add Task\nView Tasks\nSearch Task\nDelete Task\nReport\nLogout", 
                     "Choose an option",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.PLAIN_MESSAGE,
                     null,
-                    new String[]{"Add Task", "View Tasks", "Logout"},
+                    new String[]{"Add Task", "View Tasks", "Search Task", "Delete Task", "Report", "Logout"}, 
                     null);
 
-            switch (choice) {
-                case 0:
-                    addTask(user);
-                    break;
-                case 1:
-                    viewTasks();
-                    break;
-                case 2:
-                    return;  // Logout
-                default:
-                    JOptionPane.showMessageDialog(null, "Invalid choice. Please try again.");
+                    switch (choice) {
+                        case 0:
+                            addTask(user);
+                            break;
+                        case 1:
+                            viewTasks();
+                            break;
+                        case 2:
+                            searchTask(); 
+                            break;
+                        case 3:
+                            deleteTask(); 
+                            break;
+                        case 4:
+                            displayReport(); 
+                            break;
+                        case 5:
+                            return;  // Logout
+                        default:
+                            JOptionPane.showMessageDialog(null, "Invalid choice. Please try again.");
+                    }
+                }
             }
-        }
-    }
-
-    private static void addTask(User user) {
-        String taskName = JOptionPane.showInputDialog(null, "Enter task name:", "Add Task", JOptionPane.PLAIN_MESSAGE);
-        if (taskName == null) {
-            return;
-        }
-
-        int taskNumber = taskCounter++;
-
-        String taskDescription = JOptionPane.showInputDialog(null, "Enter task description (max 50 characters):", "Add Task", JOptionPane.PLAIN_MESSAGE);
-        if (taskDescription == null || taskDescription.length() > 50) {
-            JOptionPane.showMessageDialog(null, "Please enter a task description of less than 50 characters", "Add Task", JOptionPane.ERROR_MESSAGE);
-            return;
-        } else {
-            JOptionPane.showMessageDialog(null, "Task successfully captured", "Add Task", JOptionPane.INFORMATION_MESSAGE);
-        }
-
-        String developerDetails = JOptionPane.showInputDialog(null, "Enter developer details:", "Add Task", JOptionPane.PLAIN_MESSAGE);
-        if (developerDetails == null) {
-            return;
-        }
-
-        int taskDuration;
-        while (true) {
-            try {
-                taskDuration = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter task duration (in hours):", "Add Task", JOptionPane.PLAIN_MESSAGE));
-                break;
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Invalid task duration. Please enter a valid number.", "Add Task", JOptionPane.ERROR_MESSAGE);
+        
+            private static void addTask(User user) {
+                String taskName = JOptionPane.showInputDialog(null, "Enter task name:", "Add Task", JOptionPane.PLAIN_MESSAGE);
+                if (taskName == null) {
+                    return;
+                }
+        
+                int taskNumber = taskCounter++;
+        
+                String taskDescription = JOptionPane.showInputDialog(null, "Enter task description (max 50 characters):", "Add Task", JOptionPane.PLAIN_MESSAGE);
+                if (taskDescription == null || taskDescription.length() > 50) {
+                    JOptionPane.showMessageDialog(null, "Please enter a task description of less than 50 characters", "Add Task", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Task successfully captured", "Add Task", JOptionPane.INFORMATION_MESSAGE);
+                }
+        
+                String developerDetails = JOptionPane.showInputDialog(null, "Enter developer details:", "Add Task", JOptionPane.PLAIN_MESSAGE);
+                if (developerDetails == null) {
+                    return;
+                }
+        
+                int taskDuration;
+                while (true) {
+                    try {
+                        taskDuration = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter task duration (in hours):", "Add Task", JOptionPane.PLAIN_MESSAGE));
+                        break;
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Invalid task duration. Please enter a valid number.", "Add Task", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+        
+                String[] statuses = {"To Do", "Doing", "Done"};
+                int statusChoice = JOptionPane.showOptionDialog(null, "Select task status:", "Add Task", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, statuses, statuses[0]);
+                if (statusChoice == -1) {
+                    return;
+                }
+                String taskStatus = statuses[statusChoice];
+        
+                Task task = new Task(taskName, taskNumber, taskDescription, developerDetails, taskDuration, taskStatus);
+                taskList.add(task);
+        
+                // Add to arrays
+                developerArray.add(developerDetails); 
+                taskNameArray.add(taskName); 
+                taskIdArray.add(task.getTaskID()); 
+                taskDurationArray.add(taskDuration); 
+                taskStatusArray.add(taskStatus); 
+        
+                JOptionPane.showMessageDialog(null, "Task successfully added!");
             }
+        
+            private static void viewTasks() {
+                StringBuilder tasks = new StringBuilder("Task List:\n");
+                for (Task task : taskList) {
+                    tasks.append(task.printTaskDetails()).append("\n\n");
+                }
+                JOptionPane.showMessageDialog(null, tasks.toString(), "View Tasks", JOptionPane.INFORMATION_MESSAGE);
+            }
+        
+            // Method to search for a task by name
+            private static void searchTask() {
+                String taskName = JOptionPane.showInputDialog(null, "Enter task name to search:", "Search Task", JOptionPane.PLAIN_MESSAGE); 
+                if (taskName == null) {
+                    return;
+                }
+        
+                for (Task task : taskList) {
+                    if (task.getTaskName().equalsIgnoreCase(taskName)) {
+                        JOptionPane.showMessageDialog(null, task.printTaskDetails(), "Search Task", JOptionPane.INFORMATION_MESSAGE); 
+                        return;
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Task not found.", "Search Task", JOptionPane.ERROR_MESSAGE); 
+            } //(How to search for elements in an ArrayList? - Java, n.d.)
+        
+            // Method to delete a task by name
+            private static void deleteTask() {
+                String taskName = JOptionPane.showInputDialog(null, "Enter task name to delete:", "Delete Task", JOptionPane.PLAIN_MESSAGE); 
+                if (taskName == null) {
+                    return;
+                }
+        
+                for (int i = 0; i < taskList.size(); i++) {
+                    if (taskList.get(i).getTaskName().equalsIgnoreCase(taskName)) {
+                        taskList.remove(i);
+        
+                        // Remove from arrays
+                        developerArray.remove(i); 
+                        taskNameArray.remove(i); 
+                        taskIdArray.remove(i); 
+                        taskDurationArray.remove(i); 
+                        taskStatusArray.remove(i); 
+        
+                        JOptionPane.showMessageDialog(null, "Task successfully deleted.", "Delete Task", JOptionPane.INFORMATION_MESSAGE); 
+                        return;
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Task not found.", "Delete Task", JOptionPane.ERROR_MESSAGE); 
+            } //(How to search for elements in an ArrayList? - Java, n.d.)
+        
+            // Method to display a report of tasks
+            private static void displayReport() {
+                StringBuilder report = new StringBuilder("Task Report:\n");
+                for (int i = 0; i < taskList.size(); i++) {
+                    report.append("Developer: ").append(developerArray.get(i))
+                          .append("\nTask Name: ").append(taskNameArray.get(i))
+                          .append("\nTask ID: ").append(taskIdArray.get(i))
+                          .append("\nTask Duration: ").append(taskDurationArray.get(i))
+                          .append("\nTask Status: ").append(taskStatusArray.get(i))
+                          .append("\n\n");
+                }
+                JOptionPane.showMessageDialog(null, report.toString(), "Task Report", JOptionPane.INFORMATION_MESSAGE);
+            }//(StringBuilder class in java with examples, 2018)
         }
-
-        String[] statuses = {"To Do", "Doing", "Done"};
-        int statusChoice = JOptionPane.showOptionDialog(null, "Select task status:", "Add Task", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, statuses, statuses[0]);
-        if (statusChoice == -1) {
-            return;
-        }
-        String taskStatus = statuses[statusChoice];
-
-        Task task = new Task(taskName, taskNumber, taskDescription, developerDetails, taskDuration, taskStatus);
-        taskList.add(task);
-        JOptionPane.showMessageDialog(null, "Task successfully added!");
-    }
-
-    private static void viewTasks() {
-        StringBuilder tasks = new StringBuilder("Task List:\n");
-        for (Task task : taskList) {
-            tasks.append(task.printTaskDetails()).append("\n\n");
-        }
-        JOptionPane.showMessageDialog(null, tasks.toString(), "View Tasks", JOptionPane.INFORMATION_MESSAGE);
-    }
-}
-
-class User {
-    private String username;
-    private String password;
-    private String firstName;
-    private String lastName;
-
-    public User(String username, String password, String firstName, String lastName) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-}
-
-class Task {
-    private String taskName;
-    private int taskNumber;
-    private String taskDescription;
-    private String developerDetails;
-    private int taskDuration;
-    private String taskID;
-    private String taskStatus;
-
-    // Constructor
-    public Task(String taskName, int taskNumber, String taskDescription, String developerDetails, int taskDuration, String taskStatus) {
-        this.taskName = taskName;
-        this.taskNumber = taskNumber;
-        this.taskDescription = taskDescription;
-        this.developerDetails = developerDetails;
-        this.taskDuration = taskDuration;
-        this.taskStatus = taskStatus;
-        this.taskID = createTaskID();
-    }
-
-    // Method to create and return the Task ID
-    private String createTaskID() {
-        return (taskName.substring(0, 2) + ":" + taskNumber + ":" + developerDetails.substring(developerDetails.length() - 3)).toUpperCase();
-    }
-
-    public String printTaskDetails() {
-        return "Task Name: " + taskName + "\nTask Number: " + taskNumber + "\nTask Description: " + taskDescription + "\nDeveloper Details: " + developerDetails + "\nTask Duration: " + taskDuration + " hours\nTask ID: " + taskID + "\nTask Status: " + taskStatus;
-    }
-}
-
 
 
 
@@ -306,43 +324,23 @@ Available at: https://stackoverflow.com/questions/6578205/how-to-create-a-multi-
 */
 
 /*
-Oracle. 2024. JOptionPane (Java SE 17 & JDK 17). [Online].
-Available at: https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/JOptionPane.html
-[accessed 15 May 2024].
-*/
+How to search for elements in an ArrayList? - Java (2023) Stack Overflow. 
+Available at: https://stackoverflow.com/questions/62650051/how-to-search-for-elements-in-an-arraylist-java 
+(Accessed: June 24, 2024).
 
-/*
-Stack Overflow. 2014. How to validate password using regular expression. [Online].
-Available at: https://stackoverflow.com/questions/3802192/regexp-java-for-password-validation
-[accessed 15 May 2024].
-*/
+How to use array list ? [Oop] (2012) Stack Overflow. 
+Available at: https://stackoverflow.com/questions/12493548/how-to-use-array-list-oop 
+(Accessed: June 23, 2024).
 
-/*
-Stack Overflow. 2017. Getting input from JOptionPane input dialogs. [Online].
-Available at: https://stackoverflow.com/questions/6555040/getting-input-from-the-user-using-joptionpane-showinputdialog
-[accessed 15 May 2024].
-*/
+Methods as sources Hyperskill. 
+Available at: https://hyperskill.org/learn/step/19388 
+(Accessed: June 25, 2024).
 
-/*
-Oracle. 2024. Scanner (Java SE 17 & JDK 17). [Online].
-Available at: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html
-[accessed 15 May 2024].
-*/
+Regexp Java for password validation (2014) Stack Overflow. 
+Available at: https://stackoverflow.com/questions/3802192/regexp-java-for-password-validation 
+(Accessed: June 24, 2024).
 
-/*
-GeeksforGeeks. 2020. String matches() method in Java with examples. [Online].
-Available at: https://www.geeksforgeeks.org/string-matches-method-in-java-with-examples/
-[accessed 15 May 2024].
-*/
-
-/*
-JavaTPoint. 2024. Java Regular Expressions. [Online].
-Available at: https://www.javatpoint.com/java-regular-expressions
-[accessed 15 May 2024].
-*/
-
-/*
-Baeldung. 2020. Introduction to the Java Stream API. [Online].
-Available at: https://www.baeldung.com/java-8-streams
-[accessed 15 May 2024].
-*/
+StringBuilder class in java with examples (2018) GeeksforGeeks. 
+Available at: https://www.geeksforgeeks.org/stringbuilder-class-in-java-with-examples/ 
+(Accessed: June 24, 2024).
+ */
